@@ -6,9 +6,10 @@ httpRequest.onload = function() {
       console.log(httpRequest.responseText);
       var movie = JSON.parse(httpRequest.responseText);
 
+
       if(created){
         $('.movieInfoContainer').append($('<img id="poster"/>' + 
-          '<p>Title: <span id="title"></span></p>' + 
+          '<p>Title: <a href="https://www.imdb.com/title/'+ movie.imdbID + '" target="_blank"><span id="title"></span></a></p>' + 
           '<p>Year: <span id="year"><span></p>' +
           '<p>Actors: <span id="actors"></span></p>' + 
           '<p>Plot: <span id="plot"></span></p>'));
