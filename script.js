@@ -5,8 +5,19 @@ httpRequest.onload = function() {
     if (httpRequest.status === 200) {
       console.log(httpRequest.responseText);
       var movie = JSON.parse(httpRequest.responseText);
+        
+      //console.log(movie.Search[0].Title);  
+
+      $('.movieInfoContainer').html('');
+
+      for(var x = 0; x < movie.Search.length; x++){
+        $('.movieInfoContainer').append($('<img src="' + movie.Search[x].Poster + '" class="poster pt-3"/>' + 
+        '<p>Title: <a href="https://www.imdb.com/title/' + movie.Search[x].imdbID + '" target="_blank"><span class="title">'+movie.Search[x].Title+'</span></a></p>' + 
+        '<p>Year: <span class="year">'+ movie.Search[x].Year +'</span></p>'));
+      };
 
 
+      /*
       if(created){
         $('.movieInfoContainer').append($('<img id="poster"/>' + 
           '<p>Title: <a href="https://www.imdb.com/title/'+ movie.imdbID + '" target="_blank"><span id="title"></span></a></p>' + 
@@ -21,6 +32,7 @@ httpRequest.onload = function() {
       document.getElementById("year").innerHTML = movie.Year;
       document.getElementById("actors").innerHTML = movie.Actors;
       document.getElementById("plot").innerHTML = movie.Plot;
+      */
     } else {
       console.log(httpRequest.statusText);
     }
@@ -33,7 +45,7 @@ httpRequest.onerror = function() {
 var searchMovie = function(){
     var input = document.querySelector('input').value;
     if(input){
-        httpRequest.open('GET', 'http://www.omdbapi.com/?t=' + input + '&plot=short&apikey=b7da8d63');
+        httpRequest.open('GET', 'http://www.omdbapi.com/?s=' + input + '&page=1&apikey=b7da8d63');
         httpRequest.send(null);
     }
 }
