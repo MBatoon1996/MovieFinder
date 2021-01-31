@@ -1,10 +1,20 @@
+var created = true;
 var httpRequest = new XMLHttpRequest();
 httpRequest.onload = function() {
   if (httpRequest.readyState === XMLHttpRequest.DONE) {
     if (httpRequest.status === 200) {
       console.log(httpRequest.responseText);
       var movie = JSON.parse(httpRequest.responseText);
-      
+
+      if(created){
+        $('.movieInfoContainer').append($('<img id="poster"/>' + 
+          '<p>Title: <span id="title"></span></p>' + 
+          '<p>Year: <span id="year"><span></p>' +
+          '<p>Actors: <span id="actors"></span></p>' + 
+          '<p>Plot: <span id="plot"></span></p>'));
+        created = false;
+      }
+
       document.getElementById("poster").src = movie.Poster;
       document.getElementById("title").innerHTML = movie.Title;
       document.getElementById("year").innerHTML = movie.Year;
@@ -26,4 +36,9 @@ var searchMovie = function(){
         httpRequest.send(null);
     }
 }
+
+window.addEventListener('keypress', function(event){
+    if(event.key == "Enter")
+        searchMovie();
+});
 
